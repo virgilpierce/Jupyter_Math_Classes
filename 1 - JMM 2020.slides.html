@@ -13227,7 +13227,7 @@ $$ \int x^2 dx = 2 x + C $$
 </ul>
 <p><img src="IMG_4020.jpg" style="width:200px"></p>
 <ul>
-<li><p>Of course you can also generate images using Python</p>
+<li><p>You can also generate images using Python</p>
 </li>
 <li><p>A quote environment (see below)</p>
 </li>
@@ -13256,7 +13256,7 @@ $$ \int x^2 dx = 2 x + C $$
 <li>it is a powerful yet easy to learn language with far fewer things that need to be front loaded compared to C++ (no declarations), </li>
 <li>it is much easier to read Python code than other languages (in fact this is a primary focus of the design decisions),</li>
 <li>the interactive environment (like we are using in Jupyter) makes it behave like matlab (you can run a command and then see what happens), </li>
-<li>it was written by a mathematician, and is used extensively for computations in math and science,</li>
+<li>it is used extensively for computations in math and science,</li>
 <li>its plotting functions use the same syntax as matlab: plot( x, y, 'b-' )</li>
 <li>it is free and open (beer and liberty)</li>
 </ol>
@@ -13281,6 +13281,7 @@ $$ \int x^2 dx = 2 x + C $$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I have had students who have run into problems on their personal machines with computations taking too long in a data science class. I think the university Jupyter Hub I will use next time I teach that class will solve this problem.</p>
+<p>As with all languages having everyone using the same set of package versions can be an issue. The Jupyter Hub should also address this.</p>
 
 </div>
 </div>
@@ -13316,7 +13317,7 @@ $$ \int x^2 dx = 2 x + C $$
 <p>But its not just for students who have had a Python class, it is possible to design your course materials to function as a gentle introduction to the language, similarly to how matlab or mathematica can be introduced to students:</p>
 <ul>
 <li><strong>The language is human readable</strong></li>
-<li><strong>With Jupyter, the code that students see can be wrapped in detailed explanations</strong></li>
+<li><strong>With Jupyter, the code that students see can be wrapped in detailed explanations including Latex Mathematics</strong></li>
 <li><strong>With Jupyter, hyperlinks to even more details can be added</strong></li>
 <li><strong>I will show you some techniques for 'locking' cells to limit what students can change in a notebook, allowing you to create worksheets and interactive notebooks that will be hard(er) for students to 'break'</strong></li>
 </ul>
@@ -13580,7 +13581,7 @@ $$ \int x^2 dx = 2 x + C $$
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
 <span class="n">reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="o">*</span><span class="n">reg</span><span class="o">.</span><span class="n">coef_</span>
 <span class="n">c</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
@@ -13654,56 +13655,876 @@ $$ \int x^2 dx = 2 x + C $$
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Linear-Algebra">Linear Algebra<a class="anchor-link" href="#Linear-Algebra">&#182;</a></h4>
+<h4 id="Linear-Algebra">Linear Algebra<a class="anchor-link" href="#Linear-Algebra">&#182;</a></h4><p>I have taught an introductory Linear Algebra using Matlab in the class a few times. My version of the course started as the Linear Algebra for Engineers at Ohio State designed by David Terman.</p>
+<ul>
+<li>The OSU course moved at what we would probably call a very fast pace</li>
+<li>The reason for the fast pace was that Eigenvalues and Eigenvectors were covered in much more detail including lots of applications, and so the course went very fast in order to have time for that.</li>
+<li>The course also included a discussion of errors and propogation of errors in solving linear systems.</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The secret was that the course used Matlab for computations and students spent much of their time either translating application problems into LA problems or interpreting the results of computations done by the computer.</p>
+<p>Compared to the courses I took in Linear Algebra, these focus much more on large and non-square problems.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># matrices are numpy arrays</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[1 1 2]
+ [1 1 1]
+ [2 1 1]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>  
+<span class="c1"># As with matlab and mathematica it is annoyingly easy to enter row-vectors compared with column-vectors</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[-1]
+ [ 1]
+ [ 3]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># students can multiply matrices using Python</span>
+
+<span class="nb">print</span><span class="p">(</span> <span class="n">A</span> <span class="o">@</span> <span class="n">v</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[6]
+ [3]
+ [2]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Students (and you) will come face-to-face with the problem that exact results and numerical results are different things. In Python they use separate packages. See below on <em>Computational Linear Algebra</em>.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># sympy Matrices can be made from numpy arrays. They include a nice display format.</span>
+
+<span class="n">AA</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Matrix</span><span class="p">(</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">AA</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[35]:</div>
+
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$\displaystyle \left[\begin{matrix}1 & 1 & 1 & 2 & -2 & 4\\2 & 2 & 3 & 1 & -1 & 5\\-1 & -1 & 1 & 0.5 & -0.5 & 1\end{matrix}\right]$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We can compute the rref of a matrix</span>
+
+<span class="n">AA</span><span class="o">.</span><span class="n">rref</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(Matrix([
+ [1, 1.0, 0, 0,    0, 0.529411764705882],
+ [0,   0, 1, 0,    0, 0.882352941176471],
+ [0,   0, 0, 1, -1.0,  1.29411764705882]]), (0, 2, 3))</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Note that we get two items, the first is the rref, the second is a list of the columns with pivots.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">AA</span><span class="o">.</span><span class="n">rref</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># We can pull out the result by referencing the first item in the tuple.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[37]:</div>
+
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$\displaystyle \left[\begin{matrix}1 & 1.0 & 0 & 0 & 0 & 0.529411764705882\\0 & 0 & 1 & 0 & 0 & 0.882352941176471\\0 & 0 & 0 & 1 & -1.0 & 1.29411764705882\end{matrix}\right]$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So early in the course, Python gives us a nice way for students to do the computations we are doing.</p>
+<ul>
+<li>I would have students using Elementary Matrices to encode row operations as we build up to RREF.</li>
+<li>Because they are using the computer for the computations we can use much larger problems than we would by hand</li>
+<li>With much larger problems, much more interesting things happen</li>
+<li>We are letting the computer do what it is good at - arithemetic, so students can do what they are best at - thinking.</li>
+</ul>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Calculus">Calculus<a class="anchor-link" href="#Calculus">&#182;</a></h4>
+<p>Some notes on the logistics:  I would code larger matrices as .csv files and then use Python tools to have students read them in. Entering the numbers for large matrices is tedious and error prone, better to just let the computer do it.</p>
+<p>Later I will discuss some tools I would use for providing Jupyter/Python examples to students, that are superior to the way I was using Matlab.</p>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Additional-Tools:--Cell-Lock">Additional Tools:  Cell Lock<a class="anchor-link" href="#Additional-Tools:--Cell-Lock">&#182;</a></h4>
+<h5 id="Computational-Linear-Algebra">Computational Linear Algebra<a class="anchor-link" href="#Computational-Linear-Algebra">&#182;</a></h5><p>The real power of these kinds of tools in a <em>Linear Algebra</em> class comes out when we get to eigenvalues and beyond (which in my classes would be a fair bit earlier than in a non-computer class).</p>
+<p>The first method of computing eigenvalues that we typically introduce is as solutions of the polynomial equation</p>
+$$ \mbox{det}(A - \lambda I) = 0 $$<p>Which is important as it is emphasizing the use of the determinant for determining singularity, eigenvectors as elements of a nullspace, and the eigenvalues as parameters creating a nullspace.</p>
+<p>However some important points that we usually gloss over at this point in the course: General solutions to these polynomials are only guaranteed for an $A$ that is $n\times n$ with $n \leq 4$ and most of us only have the formula memorized for $n\leq 2$. Once $n$ is bigger than 4 solving this equation would be done using something like Newton's method which is slow compared to direct methods.</p>
+<p>Now I would not teach students what some of those direct methods are, but we would discuss this issue and then begin using the routines in numpy.</p>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Additional-Tools:-Jupyter-Hub-and-Github">Additional Tools: Jupyter Hub and Github<a class="anchor-link" href="#Additional-Tools:-Jupyter-Hub-and-Github">&#182;</a></h4>
+<h5 id="Eigenvalue-Lesson">Eigenvalue Lesson<a class="anchor-link" href="#Eigenvalue-Lesson">&#182;</a></h5><p>We first introduce students to Eigenvalues via experimentation with a Markov matrix</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span>
+              <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+              <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span>
+              <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> 
+              <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[0.   0.   0.25 0.   0.  ]
+ [0.   0.   0.25 0.   0.  ]
+ [0.5  1.   0.   0.5  0.  ]
+ [0.   0.   0.25 0.   0.  ]
+ [0.5  0.   0.25 0.5  1.  ]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Take a random vector $v$ and repeatedly apply $M$ (Markov matrices encode for instances how a population is moving between a set of cities at each time step).</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]])</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">M</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[0.05]
+ [0.05]
+ [0.4 ]
+ [0.05]
+ [0.45]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">@</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[0.1]
+ [0.1]
+ [0.1]
+ [0.1]
+ [0.6]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">v0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">@</span> <span class="n">v</span>  <span class="c1"># Note the 100th power of a matrix, we would not compute by hand</span>
+                                  <span class="c1"># without diagonalizing with eigenvalues/eigenvectors</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[1.77635684e-16]
+ [1.77635684e-16]
+ [1.77635684e-16]
+ [1.77635684e-16]
+ [1.00000000e+00]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">M</span> <span class="o">@</span> <span class="n">v0</span><span class="p">)</span>
+
+<span class="c1"># and so students can find that 1 is an eigenvalue of M (up to machine zero).</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[4.44089210e-17]
+ [4.44089210e-17]
+ [3.55271368e-16]
+ [4.44089210e-17]
+ [1.00000000e+00]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Verified with the numpy.linalg.eig function</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">M</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[ 1.00000000e+00 -7.07106781e-01 -2.55871713e-17  7.07106781e-01
+  0.00000000e+00]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also play with companion matrices and see much larger examples.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+               <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">192</span><span class="p">,</span> <span class="o">-</span><span class="mi">64</span><span class="p">,</span> <span class="o">-</span><span class="mi">156</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[[   0    1    0    0    0    0]
+ [   0    0    1    0    0    0]
+ [   0    0    0    1    0    0]
+ [   0    0    0    0    1    0]
+ [   0    0    0    0    0    1]
+ [ 192  -64 -156    4   25    0]]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>   
+<span class="c1"># .round() is used in the output because the tolerances for numpy.linalg.eig() are producing results</span>
+<span class="c1"># that have an error of order 10^-6. </span>
+
+<span class="c1"># Symmetric matrices have better algorithms implemented that will give more accurate results.</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[-4.+0.j  4.+0.j  3.+0.j -2.+0.j -2.-0.j  1.+0.j]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We can use the symbolic tools to verify this result</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">sy</span><span class="o">.</span><span class="n">expand</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[51]:</div>
+
+
+
+
+<div class="output_latex output_subarea output_execute_result">
+$\displaystyle x^{6} - 25 x^{4} - 4 x^{3} + 156 x^{2} + 64 x - 192$
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Other-Examples-for-Linear-Algebra-to-Consider">Other Examples for Linear Algebra to Consider<a class="anchor-link" href="#Other-Examples-for-Linear-Algebra-to-Consider">&#182;</a></h5><p>Other nice and large non-square examples that Jupyter/Python is well equiped to work with include:</p>
+<ul>
+<li>Linear Regression as the solution of a large non-square linear system of equations resulting from a Calculus optimization;</li>
+<li>Linear Regression as an orthogonal projection;</li>
+<li>For that matter orthogonal projection more generally.</li>
+</ul>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Converting-Jupyter-to-PreText">Converting Jupyter to PreText<a class="anchor-link" href="#Converting-Jupyter-to-PreText">&#182;</a></h2>
+<h4 id="Calculus">Calculus<a class="anchor-link" href="#Calculus">&#182;</a></h4><p>Unfortunately, given the short time, and also that I do not have examples already prepared, I will not give details of how I would use this in a Calculus course. Instead just some ideas:</p>
+<ul>
+<li>I think the best use of technology in a Calculus class is creating visualizations</li>
+<li>Although there is a sympy package for doing symbolic computations</li>
+<li>Mostly what I would suggest is creating Jupyter worksheets for students to use, and making use of the cell lock feature I will discuss here.</li>
+</ul>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Why-convert-Jupyter-to-PreText">Why convert Jupyter to PreText<a class="anchor-link" href="#Why-convert-Jupyter-to-PreText">&#182;</a></h3>
+<h5 id="Cell-Lock">Cell Lock<a class="anchor-link" href="#Cell-Lock">&#182;</a></h5><p>I was introduced to the cell lock feature at the Banff workshop "Open Education Resources and Technologies in Mathematics." Patrick Walls (UBC) was demonstrating the <em>NBGrader</em> package: a tool for automatically grading student Jupyter submissions when we noticed a feature available to Jupyter Notebooks.</p>
+<p>To explain, a Jupyter Notebook is a set of data in a format called JSON. Each cell in the notebook is represented as a JSON Object (a collection of unordered data) including the text of the cell and the type of cell it is (Markdown or Code). However there are additional fields that Jupyter can interpret and one called "editable" can be set to false.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following cells would be the "worksheet" for students to use to produce the graph of a function and their derivative of it.</p>
+<p>There are three editable cells. The function definition, its derivative, and a cell giving the domain for the graph. Then the rest of the worksheet is executable but not editable.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Enter the function you are graphing after &quot;return&quot;</span>
+<span class="c1"># Note that powers which we Latex with ^ are represented in Python by **</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Enter the derivative of the function you are graphing after &quot;return&quot;</span>
+
+<span class="k">def</span> <span class="nf">df</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Here you can adjust the domain for the graph below</span>
+
+<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div></section><section>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Execute this cell to graph the function and its derivative</span>
+
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">df</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="s1">&#39;r-&#39;</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXkAAAD4CAYAAAAJmJb0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy8QZhcZAAAgAElEQVR4nO3deZzW4/7H8delnSKVpbRxJEoSE4WIpCSjmnAknA46J0QnpRJHjt05J/uWDvLjHEt3WSpLdhVShFbSQos2qTQt08z1++MzY8K0zMx9z3Xf3/v9fDzmUXPfd3N/bmbec93X97o+l/PeIyIi0bRH6AJERCRxFPIiIhGmkBcRiTCFvIhIhCnkRUQirHzoArZXq1Yt37Bhw9BliIiklOnTp6/23u9X1H1JFfINGzZk2rRpocsQEUkpzrnFO7pP0zUiIhGmkBcRiTCFvIhIhCnkRUQiTCEvIhJhCnkRkQhTyIuIRFgkQv7bb6FfP8jJCV2JiEjx3XwzTJmSmK8diZCfMwfuuw+efDJ0JSIixfPppzBsGLz1VmK+vkumQ0MyMjJ8SXa8eg8nnQSLF8M330CVKgkoTkQkAc44Az7/HBYsgGrVSvY1nHPTvfcZRd0XiZG8c3D77bB0KTzySOhqRER2z7vvwsSJcP31JQ/4XYnESL5Ahw4wfbr9Rtx77zgWJiISZ97DiSfC99/bDETlyiX/WpEfyRe47TZYswbuvTd0JSIiOzd+PHz0Efz976UL+F2J1EgeICvL3v4sXAg1a8apMBGROMrLgxYtIDsbZs+GChVK9/XSZiQPcMst8PPPcNddoSsRESnaCy/Al1/CP/5R+oDflciFfJMmcNFF8MADsGxZ6GpERH4tJwduvBGaNYPzz0/880Uu5MHWnObmwq23hq5EROTXRo2C+fPtGuIeZZDAkQz5gw+Gyy+Hxx+3lTYiIslg82bb3dq6NXTuXDbPGcmQB7jhBpvrGjYsdCUiIubRR2HJEtvX41zZPGdkQ752bbj6anjmGZg5M3Q1IpLuNmywcG/fHtq2LbvnjWzIA1x3nW2KGjIkdCUiku7+9S9Ytcrm4stSpEO+Rg3bLjxuHLz3XuhqRCRdLV9uIX/++dCyZdk+d6RDHqBvX6hXDwYOtA0IIiJlbdgwWzpZ1qN4SIOQr1LFllJOmwYvvhi6GhFJN3PmwMiRcMUV8Ic/lP3zRz7kAS68EJo3t7n5LVtCVyMi6WTwYKha1Vb8hZAWIV+uHNx9t/WzefTR0NWISLr44AN45RUbYNaqFaaGyDUo25kzzoDPPrPdZtWrJ+xpRETwHlq1svYqX3+d2MOM0qpB2c7cdRf8+KOal4lI4o0eDVOnWtPEkKfVpVXIt2gBPXtav/nvvw9djYhE1datNkXTrJk1TAwprUIe7Leq99aoX0QkER57DL791q4FlisXtpZSh7xzrrJzbqpz7gvn3Czn3M35tx/snPvEOfeNc+5551zF0pdbeg0aWLuDUaOsn7OISDytW2d94tu1syNJQ4vHSH4LcJr3vjlwNNDROdcKuAu4x3vfCFgLXBqH54qLIUPswuu119qoXkQkXu64A1avtmt/ZdWEbGdKHfLe/Jz/aYX8Dw+cBozOv30U0KW0zxUv++5rO9DeesvOWRQRiYcFC+Cee+CSS+DYY0NXY+IyJ++cK+ecmwGsBCYC3wI/ee+35T9kCXDQDv5tb+fcNOfctFWrVsWjnN3Spw80bgz9+9tFEhGR0ho4EMqXt26TySIuIe+9z/XeHw3UBY4DjijqYTv4tyO89xne+4z99tsvHuXslgoVYPhw+OYbeOihMntaEYmo996DMWNsOrhOndDVFIrr6hrv/U/Ae0AroLpzrnz+XXWBpDtxtVMn6NjRTmpZvTp0NSKSqnJz4W9/g/r17VpfMonH6pr9nHPV8/9eBTgdmAO8C3TPf9glwMulfa5E+Pe/4eeftaRSREruqadgxgxbMhly41NR4jGSrw2865z7EvgUmOi9HwcMAvo75+YDNYH/xOG54q5JE5uff+wxnSAlIsW3fr2dW3HiiXDeeaGr+b3yu37IznnvvwRaFHH7Amx+PukNGwbPPmtvt958MzmWPYlIarj9dli50lbqJWN2pN2O16LUrKkllSJSfNsvmcwosj1YeAr5fH36wOGHa0mliOy+gQNtpV4yLZn8LYV8vu2XVD74YOhqRCTZJeuSyd9Kq37yu+PMM2HKFOv/fMABQUsRkSS1bRscc4z1qZk7N/yKGvWTL4b77oNNm+C660JXIiLJ6qGH4KuvrG156IDfFYX8bxx2GAwYAE8/DZMnh65GRJLNDz/YvpoOHaBL0nTk2jGFfBGGDoV69eDKK+1tmYhIgUGD7N3+/fcn55LJ31LIF2Gvvewi7Bdf6OBvESk0aZK9yx8wwN71pwJdeN0B7+3t2NSpMG+eLsKKpLtt26x98Nq1MGeODQaThS68loBz8MADkJ0NgweHrkZEQnvkETtN7p57kivgd0UhvxMF/eafesqWVYpIelqxAm68Edq3h27dQldTPAr5XbjhBqhb1y7C5uaGrkZEQhg0yN7VP/BAalxs3Z5CfheqVrWLsDNm6CKsSDqaMgVGjbI+8Y0bh66m+HThdTd4b2/Tpk+3Cy4HHhi6IhEpCzk50LIlrFljO1uTdS5eF15LyTnb4Zadbe2IRSQ93HuvLaW+777kDfhdUcjvpsaN7WCA556D118PXY2IJNrChXDTTZCZCV27hq6m5BTyxTB4sLUj7tMHNm4MXY2IJIr3cMUVUK6cdaVNtYut21PIF0OlSnZM4KJFdvi3iETT88/bO/Zbb7UWJ6lMIV9MJ58Ml15a2PZARKJl7Vro189OerrqqtDVlJ5CvgTuvtuODOzdW2vnRaJm8GBYvRpGjLDpmlSnkC+BGjVsa/PUqbbVWUSiYdIkC/d+/aBFi9DVxIfWyZeQ99CxI3z0ka2dP+ig0BWJSGls3WrBvnEjzJqVWksmtU4+AZyzUXxODvTtG7oaESmtu++G2bPh4YdTK+B3RSFfCoccYutox461A31FJDXNnWsrac49Fzp1Cl1NfCnkS+naa+0tXp8+tvVZRFJLbi706mWj9/vvD11N/CnkS6lCBXjySfjxR7j66tDViEhx3XsvfPyxBXwU+1Ip5OOgeXNrSfzf/8LLL4euRkR219df289uZib06BG6msRQyMfJkCFw1FHw17/aqF5EkltuLvz5z1C5srURT+XWBTujkI+TihXtBKlVq9SpUiQVPPggTJ5sHSZr1w5dTeIo5OOoRQsb0T/9NIwfH7oaEdmR+fPtZ7VTJ7jootDVJJZCPs5uuAGOPNJaHvz0U+hqROS38vKs/1TFira7NarTNAUU8nFWqZKttlmxwg4BF5Hk8vDD8MEH1mQwHXaqlzrknXP1nHPvOufmOOdmOeeuyb+9hnNuonPum/w/9y19uakhIwOuu87C/rXXQlcjIgUWLLAGZB062Nr4dBCPkfw24Frv/RFAK+BK51wTYDDwtve+EfB2/udp46aboGlTu3q/enXoakRk2zabfy9fHh5/PPrTNAVKHfLe++Xe+8/y/74BmAMcBJwDjMp/2CigS2mfK5VUqgTPPmu7YP/yF2toJiLh3HUXTJli5zWn+kEgxRHXOXnnXEOgBfAJcID3fjnYLwJg/x38m97OuWnOuWmrVq2KZznBNW9u/TDGjLEVNyISxvTpMGwYnH9+dDc97UjcWg0756oC7wO3ee/HOOd+8t5X3+7+td77nc7Lp1Kr4d2VmwunnQaff24nSR18cOiKRNJLdjYceyxs2ABffmnnQURNwlsNO+cqADHgWe99QT/GFc652vn31wZWxuO5Uk25cjAqf9Lq4ot1kpRIWRs0yLpMPvVUNAN+V+KxusYB/wHmeO+Hb3fXK8Al+X+/BEjbri4NG9ruukmT4J//DF2NSPp44w372bvmGjj99NDVhFHq6Rrn3EnAh8BXQF7+zddj8/IvAPWB74Bzvfc77eoSxemaAt7DeedZA7NPPonO0WIiyWrNGmjWDPbdF6ZNgypVQleUODubrilf2i/uvZ8E7GgxUrvSfv2ocM6aIE2eDD17Rv+bTiQk761Z4OrVMGFCev+sacdrGapZ0zZIzZ5t84QikhhPPw2jR8Mtt8DRR4euJiyFfBnr0MHmBx94QL3nRRJh7ly44go45RQYMCB0NeEp5AO46y445hjbVv3dd6GrEYmOTZtsLfyee9ohPuXKha4oPIV8AJUqwfPP2zbrCy6AnJzQFYlEQ//+thb+6aehTp3Q1SQHhXwghx5qbU6nTLE+NyJSOi++aIsbBg6EM88MXU3yUMgH9Mc/wmWXwR13wJtvhq5GJHUtWGA/S8cfD7fdFrqa5KKQD+y++6xb5UUXwQ8/hK5GJPVs3WoDJufgueegQoXQFSUXhXxge+4JL7xgfTUuvFBtD0SK6/rr4dNP4T//sd3l8msK+STQpIltvX7nHbj99tDViKSO8ePh3/+2JZNZWaGrSU4K+STRq5eN5IcNg4kTQ1cjkvwWLLDd482bW9BL0RTyScI5eOwxG9VfcAEsXhy6IpHklZ0N3brZ32MxqFw5bD3JTCGfRPbayw4Yycmxt56bN4euSCT5FPSl+fJLO33tD38IXVFyU8gnmUaN4Jln7CSbK6/UsYEiv/Xww/B//2f7Szp1Cl1N8lPIJ6Gzz4YbboAnnrADh0XETJkC/fpB585w442hq0kNCvkkNWyYNTPr2xemTg1djUh4P/wA3btDgwY2kt9D6bVb9J8pSZUrZw2W6tSx+fmVaXl4oojJybFDd376ya5bVa++638jRiGfxGrUsG/o1attR58amUm6GjgQPvwQRo6Eo44KXU1qUcgnuRYtbGnlu+/aXKRIuhk50tp/XHMN9OgRuprUU+rj/yTxLr4YZs60Q8CPOAKuuip0RSJl4733oE8fuz71r3+FriY1KeRTxB13wLx5Nppp1Mi+6UWibP58ux7VqJGdv1BeaVUimq5JEeXK2caPI4+0C1CzZ4euSCRxfvrJlhI7B6++CvvsE7qi1KWQTyFVq9o3fOXK9gOwenXoikTib9s2G8h8+60tPNCO1tJRyKeY+vXtAPClS+2t7NatoSsSia9+/axJ36OPwsknh64m9SnkU1CrVrYb9oMPrIeHWh9IVDz0kH0MGAB//nPoaqJBlzJSVI8eMHcu3HKLvZ0dOjR0RSKlM26cLSw4+2y4887Q1USHQj6FDRtmPbVvuMF2xvbqFboikZL56CObh2/RwnZ6lysXuqLo0HRNCttjD5u2ad8eLr/cTskRSTVz51rDsTp17Hu4atXQFZWhLVvsLUyvXrZONAEU8imuYkU7NKF5czj3XPjkk9AViey+Zctsz0f58vDGG7D//qErKgPZ2bZsqEcP2G8/m58aO9ZWUySApmsioFo1mDABTjgBzjoLJk+Gxo1DVyWycz/9BB07wo8/2s7WSC+VXL/e3qbEYvDaaxb0NWvaHFVWFrRrZyO2BFDIR8QBB9hI6IQTbGQ0ZYq9/RVJRps3Q5cuMGeODVCOPTZ0RQmwdi288gqMHg1vvmnrnQ88EP70Jwv2k08uk228CvkIOfRQ+4Fp29ZOzHn/fe0UlOSTm2v9mN5/305Ba98+dEVxtHIlvPSSjdjfecd2dtWvb8e8ZWVB69Zl3ghfIR8xGRk23XfWWXYx6/XX7exYkWSQl2d7O1580RruXXhh6IriYOlS+6GLxawfcl6ezT1de60Fe0aG9WcIJC4h75x7AugMrPTeH5l/Ww3geaAhsAg4z3u/Nh7PJzt3xhnW5+aCCyAz0y7eV6kSuipJd97bOviRI21fx4ABoSsqhYULLdRjMfj4Y7utaVNbz5yVBc2aBQ327cXrfcNTQMff3DYYeNt73wh4O/9zKSPnnQejRlkf+qwsW6klEor3cN118OCDNsC95ZbQFZXAvHlw++1wzDFwyCF2ksmWLXDrrXZxYeZMuPlmO9UkSQIe4jSS995/4Jxr+JubzwHa5v99FPAeMCgezye7p2dPu8B1+eVw/vn2FrlChdBVSTq66SbrB3/llTZNk0QZuGPew1dfFY7YZ82y21u1shfRrZuFfZJL5Jz8Ad775QDe++XOuSJXwDrnegO9AerXr5/ActLTZZdZ0Pfta6H/7LPqyy1l6/bbbeR+6aVw//1JHvDew/TpFuqjR1tTe+egTRs7nqpbN6hbN3SVxRL8x917PwIYAZCRkaFWWwlw1VX2rnLAAKhUCZ56SifdS9kYPtzm33v2tGMsk/L7Li/P+irEYnYBdfFi66tw6qn2Q9Oli61RTlGJDPkVzrna+aP42sDKBD6X7MK118KmTXDjjTZlM2KE+oNIYt1/v33fnXsuPPlkkn2/bdtmbVxjMdttuny5bUZq397mljIzbbNSBCQy5F8BLgHuzP/z5QQ+l+yGG26AnBz4xz9sCueppzRHL4lx550wZAh07ZpEU4Rbt9ra9VjM1rKvXm3Lzs4801YndO4Me+8dusq4i9cSyv9hF1lrOeeWADdh4f6Cc+5S4Dvg3Hg8l5TOzTfDnnvC4MGwcaP1RKpUKXRVEhXe27vF226z1izBBxKbNtlu01jMdp+uW2d9QDp3tmDv2DHyG0nitbrmgh3c1S4eX1/ia9Ag+77u29felY4da8EvUhreQ//+cO+9tqLrkUcCTdH8/LP1hxk92vrFbNwI++5rc+vdu8Ppp9sZmmkiGd5ESQBXXWVBf9llNpgZNy6S71SljOTm2k7WkSNtw9M995TxKpp16+wA5FjMtnlv3mwdHi+80Ebsp56atnOTCvk01quXjeB79rTrTa+9BjVqhK5KUs22bXDJJXbYx9ChtlyyTAJ+zRo78DgWs0Nhc3KsK99ll1mwt2mTZFd7w1DIp7nzz7drT+eea43NJkxIuWXAElB2trXPeOUVuOMOu9aTUD/8YPOLsZj1J87NhYYN4eqrLdiPPz5J12mGo5AXMjMt3Lt2tc18EybYzmyRnVm50s67mDbNDt++4ooEPdF33xU2AJs82Sb/Gze2i0tZWXZmYFLvsApLIS+AnVkwaZK1KD7pJPt5ilQLWImrefNs5WHBwDozM85P8O23he0Epk6125o1s4ONs7KgSRMF+25SyMsvjjrKGup16mQfjz9u5xuIbG/SJDjnHJvufu89OO64OH3h2bMLg/2LL+y2jAybB8rKgkaN4vRE6UUhL79St661xO7e3S7MLl4Mf/+7Bk1iXnwRLroIGjSwC/Wl6s/lvYV5QbDPmWO3n3CC9UPo1s2eSEpFIS+/s88+Ni/fu7e9O160CB59VJum0pn31kXyuutsOu+ll0q46997m34pCPYFC+xC6SmnWIvKrl11bmWcKeSlSBUqwBNP2MKFYcNg7lz7mdTPX/rJzrbNTf/9b+E5BcXaS5SbaxdMCxqALVlifQ5OP916H5xzjq1pl4RQyMsOOWe9mpo2tbn5Y46xTYQnnRS6MikrCxfa4PrLL61VweDBu7lCMSfHDnEdPdqG/StW2FvBDh3sC519tu1ClYRTyMsude8ORxxhP+ynnmpttfv00Tx91E2cCH/8o3XiHT/eVtPs1JYt8NZbNmJ/+WX48Ufbbdepk30TdepkfWOkTCnkZbc0bWpTqT172tTptGnw8MNp1QIkbXhvBx8NGWL/38eOtXOpi5SdDW+8YcH+6quwfr31xzj7bFsR06GDGiMFppCX3Va9uu1svPlma1f81Ve22qJhw9CVSbysW2fz7y++aPPvTzxRRJPGDRtsaB+L2RX67Gzrh9G9uwV7u3a6Sp9EFPJSLHvsYSF/7LG2lK55c+s22KNH6MqktKZMsX5e338Pd99thyL9MiW3dq39ho/FrHXvli12WtLFF1uwn3JK2jYAS3YKeSmRzExb4tyzpwXDa6/Z1nZ1skw927bZtdBbboH69W2fROvWWN+Cl16yYH/nHXtgvXrWbjIry9azqwFY0lPIS4k1bGg7Hm+7zaZvJk+2U4Batw5dmeyuRYvsF/Xkyfbnw0OXUu2tsXB9zI7Hy8uzCfn+/S3YW7bUFfcUo3ZtUirly9syyw8/tAt2bdrYiDA3N3Rlsiv/+59Nt637YhHTLxzO/317AtWOqGunyaxYAddfDzNmwDffwF13Wf8CBXzKcd770DX8IiMjw0+bNi10GVJC69bZyptnn7U8ePxxdbNMRsuXwx29vmavN2JcsleMwzdOtzuOPtpG61lZtmZWUoZzbrr3PqOo+zRdI3Gzzz7wzDN2fObVV9vF2YED7czPKlVCV5fmvCfvq1l8PnQ0lSfEuD9vpt3c9Hjofrf1idnhOklJZRrJS0KsWWOrM556Cg49FEaMsI1UUoa8h88+g1iMLf+LUWnR1+ThmLnPSdS+Kov9/tLNLqRKytvZSF5z8pIQNWvCk0/aBkjv4bTT4NJLbROkJFBeHnz0EVx7rbWIzMgg7667mbS4Pv33fITnhy+j2doP2O/WaxTwaUIhLwnVrp31PRk0yBpbHXYYPPAAbN0aurIIyc21ZU59+1pwn3AC/oEHWF6zKYP3f4L98lbw+HkTGbTgr1zwtwN17TTNKOQl4fbcE+68E6ZPt9UcV18NRx5p2+WTaLYwteTkWDuB3r2hdm2bCxs5Eo4/nm9vfoYzj11FnenjeLVWL56ZUJPnnrO9S5J+FPJSZpo3t+mbceNs6WW3brZR8tNPQ1eWIjZvtv4wf/oT7L8/dOxo6yBPOw1eeIHF01ZxQaUxHHrThXy+YB8efdQ2rO2ysZhEmkJeypRzcNZZNoXzyCPWp/6446zb4cyZoatLQhs3WrveCy6wnuuZmdbhseDPVatYNvw5+n90LocdU5WXXoKhQ2H+fPjLX+yXqaQ3ra6RoNavt302991nedali+3BadkydGUBrVtnb3diMXj9ddi0yQK+Sxdbw37qqVCxIgsWWI+ZJ5+0jgMXXQS33mpHOEp62dnqGoW8JIU1a+yC7P33Wy+s00+3sG/bNk02Wa5ZU9gAbOJEuzJdp47NaWVl2Ukt+cPyWbPsGsf//metY/70JzuWT8vc05dCXlLGhg12nuy//20761u1sl20WVkR3FC1YoU1ABs9Gt5911bJNGhQuOu0VatfjmHKzbXsf+QR+12w557WJ6x/fzjooMCvQ4JTyEvK2bzZpiGGD7f55X33temI3r3tIIuUtWSJnXMaixU2/GnUqLAX+zHH/Oqty9Kl9t9h5EhYvBhq1bJTua65poQHaUskKeQlZeXl2RLwxx+3XMzJsQ63l19uMxkp0dp4wQIrPhaDTz6x2448snDEfuSRvwr2rVutZfvjj9vZHLm5Nn3Vu7edeV2xYqDXIUlLIS+RsGoVPP20tUj4+msLu/bt7ezZzEy7Npk05swpDPYZM+y2Y48tDPbDDvvVwzdutGusY8faNdd162xde69ecNllmm+XnVPIS6R4b6cYxWIWiosW2dR1mzYW+GeeaTMgZXrB1ntbFxqL2Rz7nDl2+wknWKh36/a7cxKXLbN9A2PG2L6mzZttCiYz015Hx446bEl2T9CQd851BO4DygEjvfd37uixCnkpLu9toDx2rIXlrFl2+wEH2IKUNm3so3nzBBxi5L3t5CoYsX/7rf22OflkC/auXX+5Kuq9tWX/8MPCjwUL7MvUrWsP7drVatXadimuYCHvnCsHfA20B5YAnwIXeO9nF/V4hbyU1vz5tlDlww/tYKPFi+32atUgI8PapBd8HH64rVIs1og/L6/wbUQsZgeili9vu06zsqBLF9aU25+5c20wP2eObfiaPt0W04BdPC34BXTKKb+71ipSbCFDvjUwzHvfIf/zIQDe+zuKerxCXuLt++8LR86ff26hu3594f3Vqlkr5P33tzn9WrUK/6xZ00b/LncbNWe9T52PYtT5ZCyV1/7AtvKVWNToDKY1yGLSvmezaH0NVq+20fmqVYVfv3JlaNwYmjUrfFdx+OEKdYmvkIeGHAR8v93nS4Djt3+Ac6430Bugfv36CS5H0k29etCjh32ATZssX86vRtoLFsDq1TBvnv35889QkS20422yiHEOL1OLNWxkT16lEzGyGL/tLH6eU41KC+yXQsEvhszMX79TaNBAZ11LWIkO+aLGK7966+C9HwGMABvJJ7geSXPO2RRNnTo2w/IrmzbB66+T+0IMN/5V9tiwntyqe7Pu5LNZ2C6L9a070KjKngwG7qxuob7XXhqVS3JLdMgvAbY/maAusCzBzymy+zZsgAkTbH59/HjIzqZcjRrQ3ZY6ljv9dGpUqkSN0HWKlFCiQ/5ToJFz7mBgKfBHoEeCn1Nk59autZa9sZitXdyyxSblL77YLp6ecorWLkpkJDTkvffbnHNXAW9gSyif8N7PSuRzihRp9WrrExOL2eL0bdts7eJf/mLBfuKJmjyXSEr4ilzv/QRgQqKfR+R3li2zBfSxGLz/vi1/PPhg6NfPesW0bPlLAzCRqNK2C4mWxYttV9To0Xagtfe2zGXIEBuxH320rpRKWlHIS+r75pvCzUkF+yyaN4ebb7Zgb9IkbH0iASnkJfV4D7NnFwb7l1/a7ccdZ8dMdetmO5xERCEvKcJ727JaEOzz5tm0y4knwr33WrDXq7frryOSZhTykrzy8mDq1MJgX7jQVsC0bWunZnTpArVrh65SJKkp5CW55ObCpEkW6mPG2NFIFSrYqRlDh9qpGbVqha5SJGUo5CW8nBxrHRmL2Vr2lSuts1fHjnZidefOUL166CpFUpJCXsLYvNlOpo7F7GTqtWutEcxZZ9ka9jPPhKpVQ1cpkvIU8lJ2srPhtdcs2MeNs74x++xjrRuzsuCMM6BKldBVikSKQl4Sa/16C/RYzAJ+0yZr1H7eeTZiP+00nUwtkkAKeYm/H3+0KZhYDN58E7ZutVUwvXrZiP3kk3XGnUgZ0U+axMeKFYUNwN591xqA1a8PV15pwd66tfrEiASgkJeSW7LEljnGYna+nve203TAAAv2Y49VnxiRwBTyUjwLF1qojx4Nn3xitzVtCjfeaMHerJmCXSSJKORl1+bNKwz2zz+321q0gFtvtWA//PCw9YnIDink5fe8h6++KmwnMCv/nPILWX0AAAf9SURBVJdWreCf/7Q+MYccErZGEdktCnkx3lub3oJgnz/fLpS2aQP33w9du9pJSiKSUhTy6Swvzw7WGD3aLqB+950tbTztNBg40BqA7b9/6CpFpBQU8ulm2zb44AMbrY8dC8uX22akM86wQzYyM6FGjdBVikicKOTTwdat8PbbFuwvv2yHWlepYv1hune3fjF77x26ShFJAIV8VG3aZLtNCxqArVsH1apZR8esLOvwuNdeoasUkQRTyEfJzz/DhAkW7OPHw8aNsO++dtE0K8t6sleuHLpKESlDCvlU99NP8OqrFuxvvGEtfPffHy680KZi2ra1QzdEJC0p5FPR6tU2tx6LwVtv2aEbderA5ZfbiP2kk+yYPBFJewr5VLF8ua2GicXg/fftmLyGDeHqqy3Yjz9eDcBE5HcU8snsu+8KNydNmWIblho3hkGDLNhbtFCfGBHZKYV8spk/vzDYP/3UbjvqKBg2zIK9SRMFu4jsNoV8Mpg9uzDYv/jCbsvIsEOsu3WDRo3C1iciKUshH4L3MGNGYbDPnWuj8xNOgOHDLdgbNAhdpYhEgEK+rHgPU6cWBvuCBXahtG1b6NvX1rLXrh26ShGJGIV8IuXmwuTJFupjxthJShUq2Kak66+Hc86BWrVCVykiEaaQj7ecHFviWNAAbMUKqFTJ2gjcfjucfTZUrx66ShFJEwr5eNiyxTYlFTQA+/FH6wvTqZPtOu3UCapWDV2liKShUoW8c+5cYBhwBHCc937advcNAS4FcoGrvfdvlOa5kk52Nrz+ugX7uHGwfj3ss4+N1LOyoEMH6/QoIhJQaUfyM4FuwGPb3+icawL8EWgK1AHecs4d5r3PLeXzhbVhgzX+isWsEVh2NtSsaaP1ggZgFSuGrlJE5BelCnnv/RwA9/vNOecAz3nvtwALnXPzgeOAj0rzfEGsXWutemMxa927ZQsceCBccokF+ymn2GlKIiJJKFHpdBDw8XafL8m/7Xecc72B3gD169dPUDnFtHIlvPSSBfs779hpSvXqQZ8+FuytW6sBmIikhF2GvHPuLeDAIu4a6r1/eUf/rIjbfFEP9N6PAEYAZGRkFPmYMrF0qS1zjMXgww/t/NM//AH697dgb9lS7QREJOXsMuS996eX4OsuAept93ldYFkJvk5iLVpUuDnpo/yZpCZNYOhQC/ajjlKwi0hKS9R0zSvAf51zw7ELr42AqQl6ruKZN68w2D/7zG5r0QJuvdWC/fDDw9YnIhJHpV1C2RV4ANgPGO+cm+G97+C9n+WcewGYDWwDrgy2ssZ7mDmzMNhnzrTbjz8e7r7bgv2QQ4KUJiKSaM77cNPgv5WRkeGnTZu26wfuivcwfXrhHPvXX9u0S5s2FurdukHduqV/HhGRJOCcm+69zyjqvuis/cvLg48/LhyxL15sK2BOPRX+9jfo0sWWPoqIpJFohPz48dC7NyxbZpuR2reHm26CzEzbrCQikqaiEfL169sce1YWdO5s7QVERCQiId+smc2/i4jIr+wRugAREUkchbyISIQp5EVEIkwhLyISYQp5EZEIU8iLiESYQl5EJMIU8iIiEZZUDcqcc6uAxaHr2IVawOrQRcRJVF5LVF4H6LUko1R4HQ289/sVdUdShXwqcM5N21G3t1QTldcSldcBei3JKNVfh6ZrREQiTCEvIhJhCvniGxG6gDiKymuJyusAvZZklNKvQ3PyIiIRppG8iEiEKeRFRCJMIV9Czrm+zrl5zrlZzrm7Q9dTGs65Ac4575yrFbqWknLO/dM5N9c596VzbqxzrnromorDOdcx//tpvnNucOh6Sso5V885965zbk7+z8Y1oWsqLedcOefc5865caFrKQmFfAk4504FzgGO8t43Bf4VuKQSc87VA9oD34WupZQmAkd6748CvgaGBK5ntznnygEPAWcCTYALnHNNwlZVYtuAa733RwCtgCtT+LUUuAaYE7qIklLIl0wf4E7v/RYA7/3KwPWUxj3AdUBKX4H33r/pvd+W/+nHQN2Q9RTTccB87/0C7/1W4DlsEJFyvPfLvfef5f99AxaOB4WtquScc3WBs4CRoWspKYV8yRwGtHHOfeKce9851zJ0QSXhnMsElnrvvwhdS5z9GXgtdBHFcBDw/XafLyGFg7GAc64h0AL4JGwlpXIvNgjKC11ISUXjIO8EcM69BRxYxF1Dsf9u+2JvR1sCLzjnDvFJuB51F6/jeuCMsq2o5Hb2Wrz3L+c/Zig2ZfBsWdZWSq6I25Lue6k4nHNVgRjQz3u/PnQ9JeGc6wys9N5Pd861DV1PSSnkd8B7f/qO7nPO9QHG5If6VOdcHtbEaFVZ1be7dvQ6nHPNgIOBL5xzYNMbnznnjvPe/1CGJe62nf0/AXDOXQJ0Btol4y/cnVgC1Nvu87rAskC1lJpzrgIW8M9678eErqcUTgQynXOdgMrA3s65Z7z3PQPXVSzaDFUCzrm/AnW89393zh0GvA3UT7Fg+RXn3CIgw3uf7N32iuSc6wgMB07x3ifdL9udcc6Vxy4WtwOWAp8CPbz3s4IWVgLORgyjgB+99/1C1xMv+SP5Ad77zqFrKS7NyZfME8AhzrmZ2EWyS1I54CPiQaAaMNE5N8M592jognZX/gXjq4A3sAuVL6RiwOc7EbgIOC3//8OM/JGwBKKRvIhIhGkkLyISYQp5EZEIU8iLiESYQl5EJMIU8iIiEaaQFxGJMIW8iEiE/T+oFSV5Wn28NwAAAABJRU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Additional-Tools:-Jupyter-Hub">Additional Tools: Jupyter Hub<a class="anchor-link" href="#Additional-Tools:-Jupyter-Hub">&#182;</a></h4><p>As I have been thinking about the goal of exposing students to Jupyter/Python more frequently by including it in their mathematics class an issue arose that need to be solved:</p>
+<ul>
+<li>While at UNC 99% of students report having a personal device:<ul>
+<li>That device is often a tablet</li>
+<li>If it is a computer it is often the cheapest computer sold by a retailer.</li>
+<li>You can expect a class to have mixture of macs and PCs, and in many cases a Linux machine or two.</li>
+</ul>
+</li>
+</ul>
+<p>These devices are slow, and keeping all of the versions of Jupyter, Python, and the packages used the same is impossible. Some commands are operating system dependent, particularly ones that interface with the file system.</p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>These issues can be addressed by using a JupyterHub. A JupyterHub essentially serves up the Jupyter/Python environment on an external server rather than having students run it on their local machine.</p>
+<ul>
+<li>A simple hub can be set up on a cloud server for not too much (a few dollars per day which you can also turn off when it is not being used),</li>
+<li>A more involved hub can be set up by your IT,</li>
+<li>Students will have a uniform environment for using Jupyter/Python:  Your worksheets will work out of the box, and they will be able to share worksheets with you and other students,</li>
+<li>Because it runs on the server it can be used on a Tablet or Phone.</li>
+</ul>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Distributing-Jupyter-Notebooks-by-Github">Distributing Jupyter Notebooks by Github<a class="anchor-link" href="#Distributing-Jupyter-Notebooks-by-Github">&#182;</a></h4>
+<h2 id="Sharing-Jupyter-Notebooks">Sharing Jupyter Notebooks<a class="anchor-link" href="#Sharing-Jupyter-Notebooks">&#182;</a></h2><p>I share my Jupyter notebooks, both the class notes and the worksheets we use in two ways.</p>
+<ul>
+<li><p>The entire set of notebooks including alternate versions, as well as notebooks by other authors I want to share are maintained on a Github for the class. Students receive in the syllabus the link for downloading (or cloning) the git.</p>
+</li>
+<li><p>The final versions of the notebooks are converted to PreText and then published as sections /chapters of the course textbook.</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Students make use of both methods of obtaining the notebooks. It would be worth doing some research into why they are choosing one method or the other.</p>
+<p>I think many of them using the PreText like the navigation tools attached that allow them to skip around. I also added some hyperlinks between sections, definitions, etc.</p>
+
 </div>
 </div>
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Compiling-Notebooks-to-a-PreText-Book">Compiling Notebooks to a PreText Book<a class="anchor-link" href="#Compiling-Notebooks-to-a-PreText-Book">&#182;</a></h4>
+<h3 id="Why-convert-Jupyter-to-PreText">Why convert Jupyter to PreText<a class="anchor-link" href="#Why-convert-Jupyter-to-PreText">&#182;</a></h3><p>So the premise then is: We have a class that is using Python as a computational tool to some extent, the worksheets or notes are being prepared using Jupyter. We would like to convert them to PreText to publish as a textbook. Why? (my thoughts)</p>
+<ol>
+<li>The Textbook becomes a somewhat more fixed version of the notes,</li>
+<li>Some students prefer to access the course materials via the PreText book,</li>
+<li>We might want to add PreText features (links, index, etc.) or </li>
+<li>We are including the notebooks as part of a larger PreText project. </li>
+</ol>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The downside, if you have not noticed already, is that you need to add an extension for spell checking Jupyter markdown cells.</p>
+
+</div>
+</div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Compiling-Notebooks-to-a-PreText-Book">Compiling Notebooks to a PreText Book<a class="anchor-link" href="#Compiling-Notebooks-to-a-PreText-Book">&#182;</a></h4><p>The conversion script is available from: <a href="https://github.com/virgilpierce/jpconvert">https://github.com/virgilpierce/jpconvert</a></p>
+<p>Some notes about how it works:</p>
+<ol>
+<li>Jupyter notebooks, as we've discussed are JSON files with each cell recorded as an object.</li>
+<li>Accordingly the conversion script scans the notebooks cell-by-cell</li>
+<li>It uses the JSON tags to identify Markdown or Code and then sets the Code into PreText Code Blocks</li>
+<li>While Jupyter's Markdown contains Sectioning commands they do not <em>close</em> thus the converter needs to make some assumptions about when sections and other blocks close.</li>
+<li>Jupyter's Markdown is simple in some other ways (for instance the enumerate and itemize blocks are identified with just a leading number or -).</li>
+</ol>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Left-to-be-done">Left to be done<a class="anchor-link" href="#Left-to-be-done">&#182;</a></h5><p>Some things that are not yet done by the converter that need to be fixed:</p>
+<ul>
+<li>It should identify at the begining what the top level section is (i.e. Book or Article).</li>
+<li>The Jupyter Notebook JSON contains the actuall PNG data for the Python generated images. However I have not been able to have the script save that as a PNG file and add the image code to the PreText.</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -13740,6 +14561,8 @@ require(
 
         // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
         Reveal.initialize({
+            width: 700,
+            height: 500,
             controls: true,
             progress: true,
             history: true,
